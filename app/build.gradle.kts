@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-//    Navigation
-//    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -69,8 +67,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("androidx.compose.material:material-icons-extended:1.7.4")
-
-//    Navigation
-//    implementation(libs.navigation.compose)
-//    implementation(libs.kotlinx.serialization.json)
 }
