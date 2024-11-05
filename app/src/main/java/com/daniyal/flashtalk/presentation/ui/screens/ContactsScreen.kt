@@ -25,8 +25,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
@@ -38,12 +40,14 @@ import com.daniyal.flashtalk.data.allUsers
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.chat.ChatList
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
+import com.daniyal.flashtalk.presentation.ui.components.common.IndeterminateCircularSpinner
 import com.daniyal.flashtalk.presentation.ui.components.home.Header
+import com.daniyal.flashtalk.presentation.viewmodels.ContactViewModel
 
 @Composable
-@Preview
-fun ContactsScreen() {
-
+fun ContactsScreen(viewModel: ContactViewModel) {
+    val contacts = viewModel.contacts.collectAsState()
+    val contactLoading = viewModel.contactsLoading.collectAsState()
     val lastAlphabet = remember { mutableStateOf('A') }
 
     Surface(modifier = Modifier.fillMaxSize(1F), color = MaterialTheme.colorScheme.tertiary) {
@@ -63,7 +67,6 @@ fun ContactsScreen() {
                 )
 
             }
-
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -101,8 +104,21 @@ fun ContactsScreen() {
                         fontSize = 17.sp,
                         color = MaterialTheme.colorScheme.tertiary
                     )
+
+                    if(contactLoading.value)
+                    {
+                        Column (
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            IndeterminateCircularSpinner(
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
                     LazyColumn() {
-                        items(allUsers.sortedBy { it.fullName }) {
+                        items(contacts.value.sortedBy { it.fullName }) {
                             it.image?.let { it1 ->
                                 Text(
                                     it.fullName[0].toString(), fontFamily = CarosFontFamily,

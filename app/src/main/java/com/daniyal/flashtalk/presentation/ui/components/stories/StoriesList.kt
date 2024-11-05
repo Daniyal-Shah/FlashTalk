@@ -17,12 +17,11 @@ import com.daniyal.flashtalk.data.storyLists
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 
 @Composable
-@Preview
-fun StoriesList() {
+fun StoriesList(stories: List<Story> ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(15.dp),
     ) {
-        items(storyLists) { story ->
+        items(stories) { story ->
             StoryItem(story)
         }
     }

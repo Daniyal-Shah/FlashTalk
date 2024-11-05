@@ -19,19 +19,30 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
 import com.daniyal.flashtalk.R
+import com.daniyal.flashtalk.data.model.Story
 import com.daniyal.flashtalk.presentation.ui.components.chat.ChatList
+import com.daniyal.flashtalk.presentation.ui.components.common.IndeterminateCircularSpinner
 import com.daniyal.flashtalk.presentation.ui.components.home.Header
 import com.daniyal.flashtalk.presentation.ui.components.stories.StoriesList
+import com.daniyal.flashtalk.presentation.viewmodels.HomeViewModel
 
 
 @Composable
-@Preview
-fun HomeScreen() {
+fun HomeScreen(viewModel: HomeViewModel) {
+    val loggedUser = viewModel.loggedUser.collectAsState()
+    val stories = viewModel.stories.collectAsState()
+    val chats = viewModel.chats.collectAsState()
+    val storyLoading = viewModel.storyLoading.collectAsState()
+    val chatLoading = viewModel.chatLoading.collectAsState()
+
     Surface(modifier = Modifier.fillMaxSize(1F), color = MaterialTheme.colorScheme.tertiary) {
         Column(modifier = Modifier.fillMaxSize()) {
 //          Stories Container
@@ -44,12 +55,24 @@ fun HomeScreen() {
             ) {
                 Header(
                     title = "Home",
-                    userImage = R.drawable.person4,
+                    userImage = loggedUser.value.image,
                     leftIcon = Icons.Filled.Search,
                     imageContentDescription = null
                 )
                 Spacer(modifier = Modifier.height(40.dp))
-                StoriesList()
+                StoriesList(stories.value)
+                if(storyLoading.value)
+                {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IndeterminateCircularSpinner(
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                }
             }
 
 //          Chats Container
@@ -84,7 +107,19 @@ fun HomeScreen() {
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 )
                 {
-                    ChatList()
+                    ChatList(chats.value)
+                    if(chatLoading.value)
+                    {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            IndeterminateCircularSpinner(
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
                 }
             }
         }

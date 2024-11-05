@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,12 +41,14 @@ import com.daniyal.flashtalk.R
 import com.daniyal.flashtalk.data.singleUser
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
+import com.daniyal.flashtalk.presentation.viewmodels.ProfileViewModel
 
 
 @Composable
-@Preview
-fun ProfileScreen() {
-    val user = singleUser
+
+fun ProfileScreen(viewModel: ProfileViewModel) {
+    val user = viewModel.loggedUser.collectAsState().value
+
     Surface(modifier = Modifier.fillMaxSize(1F), color = MaterialTheme.colorScheme.tertiary) {
         Column(modifier = Modifier.fillMaxSize()) {
             Column(

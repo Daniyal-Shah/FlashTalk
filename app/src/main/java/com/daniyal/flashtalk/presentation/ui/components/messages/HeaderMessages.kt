@@ -33,7 +33,7 @@ fun HeaderMessages(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 50.dp),
+            .padding(top = 30.dp, bottom = 15.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
     ) {

@@ -4,17 +4,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.daniyal.flashtalk.data.chatsLists
+import com.daniyal.flashtalk.data.model.Chat
 
 @Composable
-@Preview
-fun ChatList() {
+fun ChatList(chats: List<Chat>) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        items(chatsLists) { chat ->
+        items(chats) { chat ->
             ChatItem(chat)
         }
     }
