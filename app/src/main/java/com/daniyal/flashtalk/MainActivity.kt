@@ -10,6 +10,7 @@ import com.daniyal.flashtalk.presentation.ui.screens.ContactsScreen
 import com.daniyal.flashtalk.presentation.ui.screens.HomeScreen
 import com.daniyal.flashtalk.presentation.ui.screens.MessagesScreen
 import com.daniyal.flashtalk.presentation.ui.screens.ProfileScreen
+import com.daniyal.flashtalk.presentation.ui.screens.SignUpScreen
 import com.daniyal.flashtalk.presentation.viewmodels.ContactViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.HomeViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.MessageViewModel
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FlashTalkTheme {
-              ProfileScreen(viewModel = ProfileViewModel())
+              HomeScreen(viewModel = HomeViewModel())
             }
         }
     }

@@ -21,7 +21,6 @@ import com.daniyal.flashtalk.presentation.ui.components.common.SubHeadingText
 @Preview()
 @Composable
 fun SignUpScreen() {
-
     Surface {
         Column(
             modifier = Modifier
@@ -29,14 +28,14 @@ fun SignUpScreen() {
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(Modifier.height(105.dp))
+            Spacer(Modifier.height(30.dp))
             HeadingText("Sign up with Email", modifier = Modifier)
-            SubHeadingText(
-                "Get chatting with friends and family today by signing up for our chat app!",
-                modifier = Modifier.padding(top = 20.dp)
-            )
-            Spacer(Modifier.height(90.dp))
-            Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(25.dp)) {
+//            SubHeadingText(
+//                "Get chatting with friends and family today by signing up for our chat app!",
+//                modifier = Modifier.padding(top = 20.dp)
+//            )
+            Spacer(Modifier.height(30.dp))
+            Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 InputText(
                     modifier = Modifier,
                     label = "Your Name",
@@ -58,6 +57,25 @@ fun SignUpScreen() {
                 InputText(
                     modifier = Modifier,
                     label = "Confirm Password",
+                    text = "",
+                    onTextChange = {
+                    })
+                InputText(
+                    modifier = Modifier,
+                    label = "Phone Number",
+                    text = "",
+                    onTextChange = {
+
+                    })
+                InputText(
+                    modifier = Modifier,
+                    label = "Bio",
+                    text = "",
+                    onTextChange = {
+                    })
+                InputText(
+                    modifier = Modifier,
+                    label = "Address",
                     text = "",
                     onTextChange = {
 
