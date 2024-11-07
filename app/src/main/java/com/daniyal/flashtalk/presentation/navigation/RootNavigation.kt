@@ -17,6 +17,7 @@ import com.daniyal.flashtalk.presentation.viewmodels.LogInViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.MessageViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.ProfileViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.SearchViewModel
+import com.daniyal.flashtalk.presentation.viewmodels.SignUpViewModel
 import kotlinx.serialization.Serializable
 
 
@@ -57,7 +58,7 @@ fun RootNavigation() {
         composable<SignUpScreen> {
             SignUpScreen(onPressAlreadyHaveAccount = {
                 navController.navigate(LogInScreen)
-            })
+            }, viewModel = SignUpViewModel())
         }
 
         composable<HomeScreen> {

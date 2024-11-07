@@ -64,14 +64,17 @@ fun LoginScreen(
                     text = email.value,
                     onTextChange = {
                         email.value = it
-                    })
+                    },
+                )
                 InputText(
                     modifier = Modifier,
                     label = "Password",
                     text = password.value,
                     onTextChange = {
                         password.value = it
-                    })
+                    },
+                    isPassword = true
+                )
             }
             Spacer(Modifier.height(80.dp))
             CustomButton(
