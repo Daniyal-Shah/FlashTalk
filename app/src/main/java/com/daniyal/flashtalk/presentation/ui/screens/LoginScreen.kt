@@ -34,14 +34,6 @@ fun LoginScreen(
     onPressNewAccount: () -> Unit,
     moveToHomeScreen: () -> Unit
 ) {
-    val email = remember { mutableStateOf("test") }
-    val password = remember { mutableStateOf("test") }
-
-    fun handleLogin() {
-        if (email.value == "test" && password.value == "test") {
-            moveToHomeScreen()
-        }
-    }
 
     Surface {
         Column(
@@ -61,26 +53,28 @@ fun LoginScreen(
                 InputText(
                     modifier = Modifier,
                     label = "Your Email",
-                    text = email.value,
+                    text = viewModel.email.value,
                     onTextChange = {
-                        email.value = it
+                        viewModel.email.value = it
                     },
+                    errorMessage = viewModel.emailError.value
                 )
                 InputText(
                     modifier = Modifier,
                     label = "Password",
-                    text = password.value,
+                    text = viewModel.password.value,
                     onTextChange = {
-                        password.value = it
+                        viewModel.password.value = it
                     },
-                    isPassword = true
+                    isPassword = true,
+                    errorMessage = viewModel.passwordError.value
                 )
             }
             Spacer(Modifier.height(80.dp))
             CustomButton(
-                if (email.value.isNotEmpty() && password.value.isNotEmpty()) CustomButtonType.ACTIVE else CustomButtonType.INACTIVE,
-                "Log In",
-                onClick = { handleLogin() })
+                title = "Log In",
+                onClick = { viewModel.submitForm { moveToHomeScreen() } },
+            )
             Spacer(Modifier.height(25.dp))
             Text(
                 "Create a new account",

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "768994470717",
+    "project_id": "flashtalk-b13ce",
+    "storage_bucket": "flashtalk-b13ce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768994470717:android:f718426df0634f945b7354",
+        "android_client_info": {
+          "package_name": "com.daniyal.flashtalk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY_bTCv6MgMbg19jXn5kxtDoPL1xGQaUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

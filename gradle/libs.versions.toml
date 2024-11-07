@@ -12,6 +12,12 @@ composeBom = "2024.04.01"
 composeNavigation = "2.8.0-alpha08"
 serialization = "1.6.3"
 
+dagger-hilt ="2.51"
+firebaseCrashlyticsBuildtools = "2.9.9"
+hilt-compose = "1.2.0"
+coil = "2.6.0"
+material3Android = "1.2.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,9 +39,19 @@ navigation-compose = { module = "androidx.navigation:navigation-compose", versio
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
 
+dagger-hilt-android = {module ="com.google.dagger:hilt-android", version.ref = "dagger-hilt"}
+dagger-hilt-compiler = {module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger-hilt"}
+dagger-hilt-compose  = {module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-compose"}
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
+coil = {module = "io.coil-kt:coil-compose" , version.ref = "coil"}
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
+
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }

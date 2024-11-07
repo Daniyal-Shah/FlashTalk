@@ -20,7 +20,7 @@ enum class CustomButtonType(val value: String) {
 }
 
 @Composable
-fun CustomButton(type: CustomButtonType, title: String, onClick: () -> Unit) {
+fun CustomButton(type: CustomButtonType= CustomButtonType.ACTIVE, title: String, onClick: () -> Unit) {
     val buttonColor =
         if (type === CustomButtonType.ACTIVE) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer
 
