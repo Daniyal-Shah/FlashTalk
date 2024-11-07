@@ -32,9 +32,12 @@ import androidx.compose.ui.unit.sp
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 
 @Composable
-@Preview
-fun SearchBar() {
-    val search = remember { mutableStateOf("Search") }
+
+fun SearchBar(
+    value: String,
+    onChange: (value: String) -> Unit
+) {
+
     Row(
         modifier = Modifier
             .clip(
@@ -53,9 +56,9 @@ fun SearchBar() {
             modifier = Modifier.size(27.dp)
         )
         BasicTextField(
-            search.value,
+            value,
             {
-                search.value = it
+                onChange(it)
             },
             modifier = Modifier
                 .fillMaxWidth(
@@ -71,11 +74,11 @@ fun SearchBar() {
         Icon(
             Icons.Outlined.Cancel,
             contentDescription = "",
-            tint = if (search.value.isNotEmpty()) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondaryContainer,
+            tint = if (value.isNotEmpty()) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondaryContainer,
             modifier = Modifier
                 .size(23.dp)
                 .clickable {
-                    if (search.value.isNotEmpty()) search.value = ""
+                    if (value.isNotEmpty()) onChange("")
                 }
 
         )

@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModel() {
     private val firebaseRepository: FirebaseRepository = FirebaseRepository()
 
-
     val loggedUser: StateFlow<User>
         get() = firebaseRepository.loggedUser
 

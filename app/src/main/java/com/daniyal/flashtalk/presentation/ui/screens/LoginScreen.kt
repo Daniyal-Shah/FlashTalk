@@ -20,22 +20,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.daniyal.flashtalk.presentation.ui.components.common.HeadingText
 import com.daniyal.flashtalk.presentation.ui.components.common.InputText
 import androidx.compose.ui.unit.dp
+import com.daniyal.flashtalk.data.singleUser
 import com.daniyal.flashtalk.presentation.theme.MyrtleGreen
 import com.daniyal.flashtalk.presentation.ui.components.common.CustomButton
 import com.daniyal.flashtalk.presentation.ui.components.common.CustomButtonType
 import com.daniyal.flashtalk.presentation.ui.components.common.SubHeadingText
+import com.daniyal.flashtalk.presentation.viewmodels.LogInViewModel
+import kotlinx.coroutines.CoroutineScope
 
-@Preview()
 @Composable
-fun LoginScreen() {
-
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-
-    fun handleForgotPassword() {
-    }
+fun LoginScreen(
+    viewModel: LogInViewModel,
+    onPressNewAccount: () -> Unit,
+    moveToHomeScreen: () -> Unit
+) {
+    val email = remember { mutableStateOf("test") }
+    val password = remember { mutableStateOf("test") }
 
     fun handleLogin() {
+        if (email.value == "test" && password.value == "test") {
+            moveToHomeScreen()
+        }
     }
 
     Surface {
@@ -75,10 +80,12 @@ fun LoginScreen() {
                 onClick = { handleLogin() })
             Spacer(Modifier.height(25.dp))
             Text(
-                "Forgot password?",
+                "Create a new account",
                 style = MaterialTheme.typography.labelMedium,
                 color = MyrtleGreen,
-                modifier = Modifier.clickable { handleForgotPassword() }
+                modifier = Modifier.clickable {
+                    onPressNewAccount()
+                }
             )
 
         }

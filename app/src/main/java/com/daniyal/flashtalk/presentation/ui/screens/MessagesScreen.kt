@@ -20,7 +20,7 @@ import com.daniyal.flashtalk.presentation.ui.components.messages.HeaderMessages
 import com.daniyal.flashtalk.presentation.viewmodels.MessageViewModel
 
 @Composable
-fun MessagesScreen(viewModel: MessageViewModel) {
+fun MessagesScreen(viewModel: MessageViewModel, onBackClick: ()-> Unit) {
 
     val messages = viewModel.messages.collectAsState()
     val messageLoading = viewModel.messageLoading.collectAsState()
@@ -30,7 +30,7 @@ fun MessagesScreen(viewModel: MessageViewModel) {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            HeaderMessages(singleUser)
+            HeaderMessages(singleUser, onBackClick)
             BodyMessages(
                 messages.value,
                 messageLoading.value,

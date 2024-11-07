@@ -1,6 +1,7 @@
 package com.daniyal.flashtalk.presentation.ui.components.chat
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,11 +31,12 @@ import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 
 @Composable
-fun ChatItem(chat: Chat) {
+fun ChatItem(chat: Chat, onPressItem: (id: Int) -> Unit) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max),
+            .fillMaxWidth().clickable {
+                onPressItem(chat.id)
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         chat.sender.image?.let { CircularImage(modifier = Modifier.size(70.dp), it) }

@@ -1,26 +1,32 @@
 package com.daniyal.flashtalk.presentation.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.daniyal.flashtalk.presentation.ui.components.common.HeadingText
 import com.daniyal.flashtalk.presentation.ui.components.common.InputText
 import androidx.compose.ui.unit.dp
+import com.daniyal.flashtalk.presentation.theme.MyrtleGreen
 import com.daniyal.flashtalk.presentation.ui.components.common.CustomButton
 import com.daniyal.flashtalk.presentation.ui.components.common.CustomButtonType
 import com.daniyal.flashtalk.presentation.ui.components.common.SubHeadingText
 
 @Preview()
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(onPressAlreadyHaveAccount: ()-> Unit) {
     Surface {
         Column(
             modifier = Modifier
@@ -84,6 +90,17 @@ fun SignUpScreen() {
                     CustomButtonType.ACTIVE,
                     "Create an account",
                     onClick = { })
+
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    "Already have account? Log In",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MyrtleGreen,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth().clickable {
+                        onPressAlreadyHaveAccount()
+                    }
+                )
             }
         }
     }

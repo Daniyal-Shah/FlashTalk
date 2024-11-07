@@ -2,6 +2,7 @@ package com.daniyal.flashtalk.presentation.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.Icon
@@ -29,6 +31,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -46,7 +49,7 @@ import com.daniyal.flashtalk.presentation.viewmodels.ProfileViewModel
 
 @Composable
 
-fun ProfileScreen(viewModel: ProfileViewModel) {
+fun ProfileScreen(viewModel: ProfileViewModel, onBackPress: () -> Unit, onPressLogOut: () -> Unit) {
     val user = viewModel.loggedUser.collectAsState().value
 
     Surface(modifier = Modifier.fillMaxSize(1F), color = MaterialTheme.colorScheme.tertiary) {
@@ -58,11 +61,26 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
                     .padding(horizontal = 20.dp)
                     .padding(top = 40.dp),
             ) {
-                Icon(
-                    Icons.Filled.ArrowBackIosNew,
-                    contentDescription = "",
-                    tint = MaterialTheme.colorScheme.secondary,
-                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Filled.ArrowBackIosNew,
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.clickable { onBackPress() }
+                    )
+
+                    Icon(
+                        Icons.Filled.Logout,
+                        contentDescription = "",
+                        tint = Color.Red,
+                        modifier = Modifier.clickable { onPressLogOut() }
+                    )
+                }
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally

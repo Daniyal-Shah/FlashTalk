@@ -97,6 +97,7 @@ val allUsers = listOf(
 )
 val chatsLists = listOf(
     Chat(
+        id = 1,
         sender = User(
             1,
             fullName = "Alex Linderson",
@@ -114,6 +115,7 @@ val chatsLists = listOf(
         dateCreated = null
     ),
     Chat(
+        id = 2,
         sender = User(
             1,
             fullName = "Angelina Jolie",
@@ -131,6 +133,7 @@ val chatsLists = listOf(
         dateCreated = null
     ),
     Chat(
+        id = 3,
         sender = User(
             1,
             fullName = "Alexa James",
@@ -148,6 +151,7 @@ val chatsLists = listOf(
         dateCreated = null
     ),
     Chat(
+        id = 4,
         sender = User(
             1,
             fullName = "Emilia Clark",

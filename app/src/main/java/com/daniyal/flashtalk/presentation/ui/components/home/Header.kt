@@ -1,5 +1,6 @@
 package com.daniyal.flashtalk.presentation.ui.components.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +23,10 @@ fun Header(
     title: String,
     leftIcon: ImageVector? = null,
     imageContentDescription: String?,
-    rightIcon: ImageVector? = null
+    rightIcon: ImageVector? = null,
+    onPressUserImage: () -> Unit,
+    onPressLeftIcon: () -> Unit,
+
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -32,7 +36,9 @@ fun Header(
 
         if (leftIcon != null) {
             OutlinedIconButton(
-                onClick = {},
+                onClick = {
+                    onPressLeftIcon()
+                },
                 shape = IconButtonDefaults.outlinedShape,
             ) {
                 Icon(
@@ -55,7 +61,9 @@ fun Header(
             }
         }
         if (userImage != null) {
-            CircularImage(modifier = Modifier.size(50.dp), userImage)
+            CircularImage(modifier = Modifier.size(50.dp).clickable {
+                onPressUserImage()
+            }, userImage)
         }
     }
 }

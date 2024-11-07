@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import androidx.navigation.compose.rememberNavController
 import com.daniyal.flashtalk.R
 import com.daniyal.flashtalk.data.model.Story
 import com.daniyal.flashtalk.presentation.ui.components.chat.ChatList
@@ -36,12 +37,18 @@ import com.daniyal.flashtalk.presentation.viewmodels.HomeViewModel
 
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    onPressChatItem: (id: Int) -> Unit,
+    onPressUserImage: () -> Unit,
+    onPressSearchIcon: () -> Unit
+) {
     val loggedUser = viewModel.loggedUser.collectAsState()
     val stories = viewModel.stories.collectAsState()
     val chats = viewModel.chats.collectAsState()
     val storyLoading = viewModel.storyLoading.collectAsState()
     val chatLoading = viewModel.chatLoading.collectAsState()
+
 
     Surface(modifier = Modifier.fillMaxSize(1F), color = MaterialTheme.colorScheme.tertiary) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -57,12 +64,13 @@ fun HomeScreen(viewModel: HomeViewModel) {
                     title = "Home",
                     userImage = loggedUser.value.image,
                     leftIcon = Icons.Filled.Search,
-                    imageContentDescription = null
+                    imageContentDescription = null,
+                    onPressUserImage = onPressUserImage,
+                    onPressLeftIcon = onPressSearchIcon
                 )
                 Spacer(modifier = Modifier.height(40.dp))
                 StoriesList(stories.value)
-                if(storyLoading.value)
-                {
+                if (storyLoading.value) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
@@ -107,9 +115,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 )
                 {
-                    ChatList(chats.value)
-                    if(chatLoading.value)
-                    {
+                    ChatList(chats = chats.value, onPressChatItem = onPressChatItem)
+                    if (chatLoading.value) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,

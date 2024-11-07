@@ -1,6 +1,7 @@
 package com.daniyal.flashtalk.presentation.ui.components.messages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 @Composable
 fun HeaderMessages(
     user: User,
+    onBackPress: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -41,7 +43,10 @@ fun HeaderMessages(
         Icon(
             Icons.Filled.ArrowBackIosNew,
             contentDescription = "",
-            tint = MaterialTheme.colorScheme.tertiary
+            tint = MaterialTheme.colorScheme.tertiary,
+            modifier = Modifier.clickable {
+                onBackPress()
+            }
         )
         Spacer(modifier = Modifier.width(35.dp))
         Row(

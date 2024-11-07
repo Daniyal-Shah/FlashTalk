@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.setContent
+import com.daniyal.flashtalk.presentation.navigation.RootNavigation
 import com.daniyal.flashtalk.presentation.theme.FlashTalkTheme
 import com.daniyal.flashtalk.presentation.ui.screens.ContactsScreen
 import com.daniyal.flashtalk.presentation.ui.screens.HomeScreen
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FlashTalkTheme {
-              HomeScreen(viewModel = HomeViewModel())
+                RootNavigation()
             }
         }
     }

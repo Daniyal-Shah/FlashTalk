@@ -53,9 +53,6 @@ class FirebaseRepository {
         _loggedUser.emit(user)
     }
 
-
-
-
     suspend fun getStories() {
         _storyLoading.emit(true)
         delay(1000)
@@ -82,6 +79,5 @@ class FirebaseRepository {
         delay(1000)
         _contacts.value = allUsers
         _contactLoading.emit(false)
-
     }
 }

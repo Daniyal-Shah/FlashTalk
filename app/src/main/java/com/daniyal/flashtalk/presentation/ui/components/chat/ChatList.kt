@@ -8,12 +8,14 @@ import androidx.compose.ui.unit.dp
 import com.daniyal.flashtalk.data.model.Chat
 
 @Composable
-fun ChatList(chats: List<Chat>) {
+fun ChatList(chats: List<Chat>, onPressChatItem: (id: Int)-> Unit) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         items(chats) { chat ->
-            ChatItem(chat)
+            ChatItem(onPressItem = {
+                onPressChatItem(chat.id)
+            } , chat = chat)
         }
     }
 }

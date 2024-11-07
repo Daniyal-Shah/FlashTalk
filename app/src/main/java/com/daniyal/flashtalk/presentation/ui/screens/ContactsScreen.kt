@@ -63,7 +63,11 @@ fun ContactsScreen(viewModel: ContactViewModel) {
                     title = "Contacts",
                     leftIcon = Icons.Filled.Search,
                     imageContentDescription = null,
-                    rightIcon = Icons.Outlined.Add
+                    rightIcon = Icons.Outlined.Add,
+                    onPressUserImage = {
+                    },
+                    onPressLeftIcon = {
+                    }
                 )
 
             }
@@ -105,9 +109,8 @@ fun ContactsScreen(viewModel: ContactViewModel) {
                         color = MaterialTheme.colorScheme.tertiary
                     )
 
-                    if(contactLoading.value)
-                    {
-                        Column (
+                    if (contactLoading.value) {
+                        Column(
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
