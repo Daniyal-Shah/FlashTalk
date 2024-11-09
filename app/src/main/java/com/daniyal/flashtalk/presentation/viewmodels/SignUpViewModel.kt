@@ -3,13 +3,21 @@ package com.daniyal.flashtalk.presentation.viewmodels
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daniyal.flashtalk.data.model.User
 import com.daniyal.flashtalk.data.repository.FirebaseRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
     private val firebaseRepository: FirebaseRepository = FirebaseRepository()
 
-    // State variables for each input field
+     val loading: StateFlow<Boolean>
+        get() = firebaseRepository.loading
+
+
     var name = mutableStateOf("")
     var nameError = mutableStateOf<String?>(null)
     var email = mutableStateOf("")
@@ -23,9 +31,8 @@ class SignUpViewModel : ViewModel() {
     var bio = mutableStateOf("")
     var bioError = mutableStateOf<String?>(null)
 
-
     // Function to validate inputs
-    fun validateInputs(): Boolean {
+    private fun validateInputs(): Boolean {
         return when {
             name.value.isEmpty() && email.value.isEmpty() && password.value.isEmpty() && confirmPassword.value.isEmpty() && phoneNumber.value.isEmpty() && bio.value.isEmpty() -> {
                 nameError.value = "Name cannot be empty"
@@ -36,12 +43,12 @@ class SignUpViewModel : ViewModel() {
                 bioError.value = "Bio cannot be empty"
                 false
             }
-
             name.value.isEmpty() -> {
                 nameError.value = "Name cannot be empty"
                 false
             }
-            email.value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.value).matches() -> {
+            email.value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.value)
+                .matches() -> {
                 emailError.value = "Invalid email address"
                 false
             }
@@ -69,13 +76,30 @@ class SignUpViewModel : ViewModel() {
     }
 
     // Function to handle form submission
-    fun submitForm(onSuccess: () -> Unit) {
+    fun submitForm() {
         if (validateInputs()) {
             viewModelScope.launch {
-                // Call to Firebase or any other repository for signup
-                // firebaseRepository.signUp(email.value, password.value)
-                onSuccess() // Call success callback
+                firebaseRepository.signup(name = name.value,
+                    email = email.value,
+                    password = password.value,
+                    phoneNumber = phoneNumber.value,
+                    bio = bio.value,
+                    image = "https://picsum.photos/200",
+                    onSuccess = {
+                        clearValues()
+                    },
+                    onError = {})
             }
         }
+    }
+
+    private fun clearValues() {
+        name.value = ""
+        email.value = ""
+        password.value = ""
+        password.value = ""
+        confirmPassword.value = ""
+        phoneNumber.value = ""
+        bio.value = ""
     }
 }

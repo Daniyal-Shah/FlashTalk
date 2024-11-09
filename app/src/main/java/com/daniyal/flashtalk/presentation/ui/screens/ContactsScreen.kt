@@ -36,7 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniyal.flashtalk.R
-import com.daniyal.flashtalk.data.allUsers
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.chat.ChatList
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
@@ -130,12 +129,12 @@ fun ContactsScreen(viewModel: ContactViewModel) {
                                     color = MaterialTheme.colorScheme.tertiary
                                 )
                                 Spacer(modifier = Modifier.height(10.dp))
-                                CircularImage(
-                                    Modifier.size(55.dp),
-                                    it1,
-                                    it.fullName,
-                                    "Keep working ✍",
-                                )
+//                                CircularImage(
+//                                    Modifier.size(55.dp),
+//                                    it1,
+//                                    it.fullName,
+//                                    "Keep working ✍",
+//                                )
                                 Spacer(modifier = Modifier.height(20.dp))
                             }
                         }

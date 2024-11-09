@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModel() {
     private val firebaseRepository: FirebaseRepository = FirebaseRepository()
 
-    val loggedUser: StateFlow<User>
+    val loggedUser: StateFlow<User?>
         get() = firebaseRepository.loggedUser
 
     val stories: StateFlow<List<Story>>
@@ -31,6 +31,8 @@ class HomeViewModel : ViewModel() {
 
 
     init {
+        firebaseRepository.getCurrentUser()
+
         viewModelScope.launch {
             firebaseRepository.getChats()
         }

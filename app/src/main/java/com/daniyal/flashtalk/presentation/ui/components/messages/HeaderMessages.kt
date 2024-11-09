@@ -56,7 +56,7 @@ fun HeaderMessages(
                 .fillMaxWidth(),
         ) {
             Row {
-                user.image?.let { CircularImage(modifier = Modifier.size(50.dp), it) }
+//                user.image?.let { CircularImage(modifier = Modifier.size(50.dp), it) }
                 Spacer(modifier = Modifier.width(15.dp))
                 Column(
                     verticalArrangement = Arrangement.Center,

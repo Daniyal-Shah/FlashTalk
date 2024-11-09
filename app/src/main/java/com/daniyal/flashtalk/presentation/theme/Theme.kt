@@ -21,7 +21,9 @@ private val DarkColorScheme = darkColorScheme(
     inversePrimary = GrayDarker,
     outline = Gray,
     error = CarminePink,
-    outlineVariant = ChineseBlack
+    outlineVariant = ChineseBlack,
+    primaryContainer = SuccessGreen
+
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -35,7 +37,8 @@ private val LightColorScheme = lightColorScheme(
     inversePrimary = GrayDarker,
     outline = Gray,
     error = CarminePink,
-    outlineVariant = ChineseBlack
+    outlineVariant = ChineseBlack,
+    primaryContainer = SuccessGreen
 )
 
 @Composable

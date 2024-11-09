@@ -28,8 +28,6 @@ import androidx.compose.ui.unit.dp
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 import com.daniyal.flashtalk.presentation.ui.components.common.SearchBar
 import com.daniyal.flashtalk.R
-import com.daniyal.flashtalk.data.allUsers
-import com.daniyal.flashtalk.data.singleUser
 import com.daniyal.flashtalk.presentation.ui.components.common.IndeterminateCircularSpinner
 import com.daniyal.flashtalk.presentation.viewmodels.SearchViewModel
 
@@ -88,12 +86,12 @@ fun SearchScreen(viewModel: SearchViewModel, onBackPress: () -> Unit) {
                 ) {
                     it.image?.let { it1 ->
                         Spacer(modifier = Modifier.height(20.dp))
-                        CircularImage(
-                            Modifier.size(80.dp),
-                            it1,
-                            it.fullName,
-                            "Keep working ✍",
-                        )
+//                        CircularImage(
+//                            Modifier.size(80.dp),
+//                            it1,
+//                            it.fullName,
+//                            "Keep working ✍",
+//                        )
                     }
                 }
 

@@ -1,5 +1,6 @@
 package com.daniyal.flashtalk.presentation.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,7 +42,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniyal.flashtalk.R
-import com.daniyal.flashtalk.data.singleUser
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 import com.daniyal.flashtalk.presentation.viewmodels.ProfileViewModel
@@ -51,6 +51,7 @@ import com.daniyal.flashtalk.presentation.viewmodels.ProfileViewModel
 
 fun ProfileScreen(viewModel: ProfileViewModel, onBackPress: () -> Unit, onPressLogOut: () -> Unit) {
     val user = viewModel.loggedUser.collectAsState().value
+
 
     Surface(modifier = Modifier.fillMaxSize(1F), color = MaterialTheme.colorScheme.tertiary) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -85,28 +86,30 @@ fun ProfileScreen(viewModel: ProfileViewModel, onBackPress: () -> Unit, onPressL
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    user.image?.let {
+                    user?.image?.let {
                         CircularImage(
                             modifier = Modifier
                                 .size(80.dp),
-                            resourceId = it
+                            uri = it
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        user.fullName,
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontFamily = CarosFontFamily,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        user.email,
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        fontFamily = CarosFontFamily,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Normal
-                    )
+                    if (user != null) {
+                        Text(
+                            user.fullName,
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontFamily = CarosFontFamily,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            user.email,
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            fontFamily = CarosFontFamily,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
                     Spacer(modifier = Modifier.size(10.dp))
                     Row(
                         modifier = Modifier
@@ -177,10 +180,13 @@ fun ProfileScreen(viewModel: ProfileViewModel, onBackPress: () -> Unit, onPressL
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 )
                 {
-                    Field(key = "Display Name", value = "Daniyal Shah")
-                    Field(key = "Email Address", value = "daniyal.shah.cs@gmail.com")
-                    Field(key = "Address", value = "Pir-jo-goth, Sindh, Pakistan")
-                    Field(key = "Phone Number", value = "+923063350899")
+                    if (user != null) {
+                        Field(key = "Display Name", value = user.fullName)
+                        Field(key = "Email Address", value = user.email)
+//                        Field(key = "Address", value = "Pir-jo-goth, Sindh, Pakistan")
+                        Field(key = "Phone Number", value = user.phoneNumber)
+                    }
+
                     MediaShared()
                 }
             }

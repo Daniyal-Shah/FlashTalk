@@ -1,6 +1,7 @@
 package com.daniyal.flashtalk.presentation.ui.screens
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,8 +50,7 @@ fun HomeScreen(
     val storyLoading = viewModel.storyLoading.collectAsState()
     val chatLoading = viewModel.chatLoading.collectAsState()
 
-
-    Surface(modifier = Modifier.fillMaxSize(1F), color = MaterialTheme.colorScheme.tertiary) {
+    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.tertiary) {
         Column(modifier = Modifier.fillMaxSize()) {
 //          Stories Container
             Column(
@@ -62,7 +62,7 @@ fun HomeScreen(
             ) {
                 Header(
                     title = "Home",
-                    userImage = loggedUser.value.image,
+                    userImage = loggedUser.value?.image,
                     leftIcon = Icons.Filled.Search,
                     imageContentDescription = null,
                     onPressUserImage = onPressUserImage,

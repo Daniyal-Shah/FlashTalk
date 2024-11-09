@@ -1,7 +1,10 @@
 package com.daniyal.flashtalk.presentation.ui.screens
 
+import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -22,11 +26,13 @@ import androidx.compose.ui.unit.dp
 import com.daniyal.flashtalk.presentation.theme.MyrtleGreen
 import com.daniyal.flashtalk.presentation.ui.components.common.CustomButton
 import com.daniyal.flashtalk.presentation.ui.components.common.CustomButtonType
+import com.daniyal.flashtalk.presentation.ui.components.common.IndeterminateCircularSpinner
 import com.daniyal.flashtalk.presentation.ui.components.common.SubHeadingText
 import com.daniyal.flashtalk.presentation.viewmodels.SignUpViewModel
 
 @Composable
 fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Unit) {
+    val loading = viewModel.loading.collectAsState()
     Surface {
         Column(
             modifier = Modifier
@@ -36,10 +42,6 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
         ) {
             Spacer(Modifier.height(20.dp))
             HeadingText("Sign up with Email", modifier = Modifier)
-//            SubHeadingText(
-//                "Get chatting with friends and family today by signing up for our chat app!",
-//                modifier = Modifier.padding(top = 10.dp)
-//            )
             Spacer(Modifier.height(30.dp))
             Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 // Input fields with state management
@@ -50,7 +52,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     onTextChange = {
                         viewModel.name.value = it
                         viewModel.nameError.value = null
-                        viewModel.validateInputs()
+
                     },
                     errorMessage = viewModel.nameError.value
                 )
@@ -61,7 +63,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     onTextChange = {
                         viewModel.email.value = it
                         viewModel.emailError.value = null
-                        viewModel.validateInputs()
+
                     },
                     errorMessage = viewModel.emailError.value
                 )
@@ -72,7 +74,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     onTextChange = {
                         viewModel.password.value = it
                         viewModel.passwordError.value = null
-                        viewModel.validateInputs()
+
                     },
                     isPassword = true,
                     errorMessage = viewModel.passwordError.value
@@ -84,7 +86,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     onTextChange = {
                         viewModel.confirmPassword.value = it
                         viewModel.confirmPasswordError.value = null
-                        viewModel.validateInputs()
+
                     },
                     isPassword = true,
                     errorMessage = viewModel.confirmPasswordError.value
@@ -96,7 +98,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     onTextChange = {
                         viewModel.phoneNumber.value = it
                         viewModel.phoneError.value = null
-                        viewModel.validateInputs()
+
                     },
                     errorMessage = viewModel.phoneError.value
                 )
@@ -107,7 +109,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     onTextChange = {
                         viewModel.bio.value = it
                         viewModel.bioError.value = null
-                        viewModel.validateInputs()
+
                     },
                     errorMessage = viewModel.bioError.value
                 )
@@ -118,9 +120,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     CustomButtonType.ACTIVE,
                     "Create an account",
                     onClick = {
-                        viewModel.submitForm {
-                            // Handle successful signup, e.g., navigate to another screen
-                        }
+                        viewModel.submitForm()
                     }
                 )
                 Text(
@@ -136,5 +136,17 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                 )
             }
         }
+
+        if (loading.value) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.8F)),
+                Alignment.Center
+            ) {
+                IndeterminateCircularSpinner()
+            }
+        }
+
     }
 }

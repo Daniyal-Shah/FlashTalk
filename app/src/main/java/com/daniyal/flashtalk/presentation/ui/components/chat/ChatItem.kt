@@ -29,17 +29,25 @@ import androidx.compose.ui.unit.sp
 import com.daniyal.flashtalk.data.model.Chat
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
+import com.daniyal.flashtalk.presentation.ui.components.common.DotType
 
 @Composable
-fun ChatItem(chat: Chat, onPressItem: (id: Int) -> Unit) {
+fun ChatItem(chat: Chat, onPressItem: (id: Int) -> Unit, userStatus: DotType? = null) {
     Row(
         modifier = Modifier
-            .fillMaxWidth().clickable {
+            .fillMaxWidth()
+            .clickable {
                 onPressItem(chat.id)
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        chat.sender.image?.let { CircularImage(modifier = Modifier.size(70.dp), it) }
+        chat.sender.image?.let {
+//            CircularImage(
+//                dotType = userStatus,
+//                modifier = Modifier.size(70.dp),
+//                resourceId = it
+//            )
+        }
         Row(
             modifier = Modifier
                 .fillMaxSize()

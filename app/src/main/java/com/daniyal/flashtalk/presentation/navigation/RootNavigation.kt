@@ -1,9 +1,10 @@
 package com.daniyal.flashtalk.presentation.navigation
 
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.daniyal.flashtalk.presentation.ui.screens.ContactsScreen
 import com.daniyal.flashtalk.presentation.ui.screens.HomeScreen
 import com.daniyal.flashtalk.presentation.ui.screens.LoginScreen
@@ -18,6 +19,7 @@ import com.daniyal.flashtalk.presentation.viewmodels.MessageViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.ProfileViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.SearchViewModel
 import com.daniyal.flashtalk.presentation.viewmodels.SignUpViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.serialization.Serializable
 
 
@@ -31,7 +33,7 @@ object SignUpScreen
 object HomeScreen
 
 @Serializable
-object MessageScreen
+data class MessageScreen(val userId: Int)
 
 @Serializable
 object ProfileScreen
@@ -43,56 +45,78 @@ object SearchScreen
 object ContactScreen
 
 @Composable
-fun RootNavigation() {
-    val navController = rememberNavController()
-    NavHost(navController, startDestination = LogInScreen) {
+fun RootNavigation(
+    navController: NavHostController,
+) {
+    val startDestination =
+        if (FirebaseAuth.getInstance().currentUser != null) HomeScreen else LogInScreen
 
-        composable<LogInScreen> {
-            LoginScreen(LogInViewModel(), onPressNewAccount = {
-                navController.navigate(SignUpScreen)
-            }, moveToHomeScreen = {
-                navController.navigate(HomeScreen)
-            })
+    Scaffold(
+        bottomBar = {
         }
+    ) { innerPadding ->
+        NavHost(
+            navController,
+            startDestination = startDestination,
+        ) {
+            // LogIn Screen
+            composable<LogInScreen> {
+                LoginScreen(LogInViewModel(), onPressNewAccount = {
+                    navController.navigate(SignUpScreen)
+                }, moveToHomeScreen = {
+                    navController.navigate(HomeScreen)
 
-        composable<SignUpScreen> {
-            SignUpScreen(onPressAlreadyHaveAccount = {
-                navController.navigate(LogInScreen)
-            }, viewModel = SignUpViewModel())
-        }
+                })
+            }
+            // SignUp Screen
+            composable<SignUpScreen> {
+                SignUpScreen(onPressAlreadyHaveAccount = {
+                    navController.navigate(LogInScreen)
+                }, viewModel = SignUpViewModel())
+            }
+            // Home Screen
+            composable<HomeScreen> {
+                HomeScreen(HomeViewModel(),
+                    onPressChatItem = {
+                        navController.navigate(MessageScreen(it))
 
-        composable<HomeScreen> {
-            HomeScreen(HomeViewModel(), onPressChatItem = {
-                navController.navigate(MessageScreen)
-            }, onPressUserImage = {
-                navController.navigate(ProfileScreen)
-            }, onPressSearchIcon = {
-                navController.navigate(SearchScreen)
-            })
-        }
+                    }, onPressUserImage = {
+                        navController.navigate(ProfileScreen)
 
-        composable<MessageScreen> {
-            MessagesScreen(MessageViewModel(), onBackClick = {
-                navController.popBackStack()
-            })
-        }
+                    }, onPressSearchIcon = {
+                        navController.navigate(SearchScreen)
 
-        composable<ProfileScreen> {
-            ProfileScreen(ProfileViewModel(), onBackPress = {
-                navController.popBackStack()
-            }, onPressLogOut = {
-                navController.navigate(LogInScreen)
-            })
-        }
+                    })
+            }
+            // Message Screen
+            composable<MessageScreen> {
+                MessagesScreen(MessageViewModel(), onBackClick = {
+                    navController.popBackStack()
 
-        composable<ContactScreen> {
-            ContactsScreen(ContactViewModel())
-        }
+                })
+            }
+            // Profile Screen
+            composable<ProfileScreen> {
+                ProfileScreen(ProfileViewModel(), onBackPress = {
+                    navController.popBackStack()
 
-        composable<SearchScreen> {
-            SearchScreen(SearchViewModel(), onBackPress = {
-                navController.popBackStack()
-            })
+                }, onPressLogOut = {
+                    navController.navigate(LogInScreen)
+
+                })
+            }
+            // Contacts Screen
+            composable<ContactScreen> {
+                ContactsScreen(ContactViewModel())
+
+            }
+            // Search Screen
+            composable<SearchScreen> {
+                SearchScreen(SearchViewModel(), onBackPress = {
+                    navController.popBackStack()
+
+                })
+            }
         }
     }
 }

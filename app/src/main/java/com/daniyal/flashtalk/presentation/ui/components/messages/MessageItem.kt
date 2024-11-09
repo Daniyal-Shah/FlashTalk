@@ -52,7 +52,7 @@ fun MessageItem(
 
     Row() {
         if (message.isMessageReceived) {
-            CircularImage(modifier = Modifier.size(40.dp), R.drawable.person5)
+            CircularImage(modifier = Modifier.size(40.dp), "")
             Spacer(Modifier.width(10.dp))
         }
         Column(

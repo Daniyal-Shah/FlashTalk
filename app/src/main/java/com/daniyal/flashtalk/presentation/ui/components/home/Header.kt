@@ -19,7 +19,7 @@ import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 
 @Composable
 fun Header(
-    userImage: Int? = null,
+    userImage: String? = null,
     title: String,
     leftIcon: ImageVector? = null,
     imageContentDescription: String?,
@@ -60,10 +60,8 @@ fun Header(
                 )
             }
         }
-        if (userImage != null) {
-            CircularImage(modifier = Modifier.size(50.dp).clickable {
-                onPressUserImage()
-            }, userImage)
-        }
+        CircularImage(modifier = Modifier.size(50.dp).clickable {
+            onPressUserImage()
+        }, userImage ?: "")
     }
 }

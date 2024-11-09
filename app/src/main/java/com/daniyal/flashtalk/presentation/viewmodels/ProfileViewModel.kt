@@ -8,7 +8,10 @@ import kotlinx.coroutines.flow.StateFlow
 class ProfileViewModel: ViewModel() {
     private val firebaseRepository: FirebaseRepository = FirebaseRepository()
 
-    val loggedUser: StateFlow<User>
+    val loggedUser: StateFlow<User?>
         get() = firebaseRepository.loggedUser
 
+    init {
+        firebaseRepository.getCurrentUser()
+    }
 }
