@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.daniyal.flashtalk.presentation.ui.screens.ContactsScreen
 import com.daniyal.flashtalk.presentation.ui.screens.HomeScreen
 import com.daniyal.flashtalk.presentation.ui.screens.LoginScreen
@@ -33,7 +34,7 @@ object SignUpScreen
 object HomeScreen
 
 @Serializable
-data class MessageScreen(val userId: Int)
+data class MessageScreen(val userId: String)
 
 @Serializable
 object ProfileScreen
@@ -79,7 +80,6 @@ fun RootNavigation(
                 HomeScreen(HomeViewModel(),
                     onPressChatItem = {
                         navController.navigate(MessageScreen(it))
-
                     }, onPressUserImage = {
                         navController.navigate(ProfileScreen)
 
@@ -90,7 +90,8 @@ fun RootNavigation(
             }
             // Message Screen
             composable<MessageScreen> {
-                MessagesScreen(MessageViewModel(), onBackClick = {
+                val args = it.toRoute<MessageScreen>()
+                MessagesScreen(MessageViewModel(), args.userId, onBackClick = {
                     navController.popBackStack()
 
                 })

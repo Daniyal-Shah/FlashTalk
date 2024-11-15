@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,11 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 import com.daniyal.flashtalk.presentation.ui.components.common.SearchBar
 import com.daniyal.flashtalk.R
 import com.daniyal.flashtalk.presentation.ui.components.common.IndeterminateCircularSpinner
 import com.daniyal.flashtalk.presentation.viewmodels.SearchViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun SearchScreen(viewModel: SearchViewModel, onBackPress: () -> Unit) {
@@ -37,6 +41,7 @@ fun SearchScreen(viewModel: SearchViewModel, onBackPress: () -> Unit) {
     val contacts = viewModel.contacts.collectAsState()
     val contactsLoading = viewModel.contactsLoading.collectAsState()
     val search = remember { mutableStateOf("Search") }
+
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -81,17 +86,23 @@ fun SearchScreen(viewModel: SearchViewModel, onBackPress: () -> Unit) {
                         contacts.value
                     else
                         contacts.value.filter {
-                            it.fullName.lowercase().startsWith(search.value.lowercase())
+                            it.fullName.lowercase().contains(search.value.lowercase())
                         }
                 ) {
-                    it.image?.let { it1 ->
+                    it.image.let { it1 ->
                         Spacer(modifier = Modifier.height(20.dp))
-//                        CircularImage(
-//                            Modifier.size(80.dp),
-//                            it1,
-//                            it.fullName,
-//                            "Keep working ✍",
-//                        )
+                        CircularImage(
+                            Modifier
+                                .size(80.dp)
+                                .clickable {
+                                    viewModel.createChat(
+                                        receiver = it
+                                    )
+                                },
+                            it1,
+                            it.fullName,
+                            it.bio,
+                        )
                     }
                 }
 

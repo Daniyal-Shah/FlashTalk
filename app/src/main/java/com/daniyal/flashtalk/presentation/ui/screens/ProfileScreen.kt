@@ -79,7 +79,11 @@ fun ProfileScreen(viewModel: ProfileViewModel, onBackPress: () -> Unit, onPressL
                         Icons.Filled.Logout,
                         contentDescription = "",
                         tint = Color.Red,
-                        modifier = Modifier.clickable { onPressLogOut() }
+                        modifier = Modifier.clickable {
+                            viewModel.signOut()
+                            onPressLogOut()
+
+                        }
                     )
                 }
                 Column(

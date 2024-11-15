@@ -7,16 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.daniyal.flashtalk.data.model.Chat
 import com.daniyal.flashtalk.presentation.ui.components.common.DotType
+import com.daniyal.flashtalk.presentation.viewmodels.ChatItemViewModel
 
 @Composable
-fun ChatList(chats: List<Chat>, onPressChatItem: (id: Int)-> Unit) {
+fun ChatList(chats: List<Chat>, onPressChatItem: (id: String) -> Unit) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         items(chats) { chat ->
             ChatItem(onPressItem = {
                 onPressChatItem(chat.id)
-            } , chat = chat, userStatus = DotType.ACTIVE)
+            }, chat = chat, userStatus = DotType.ACTIVE, viewModel = ChatItemViewModel())
         }
     }
 }

@@ -11,6 +11,11 @@ class ProfileViewModel: ViewModel() {
     val loggedUser: StateFlow<User?>
         get() = firebaseRepository.loggedUser
 
+    fun signOut()
+    {
+        firebaseRepository.signOut()
+    }
+
     init {
         firebaseRepository.getCurrentUser()
     }

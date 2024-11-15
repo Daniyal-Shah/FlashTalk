@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daniyal.flashtalk.data.model.Channel
 import com.daniyal.flashtalk.data.model.Chat
 import com.daniyal.flashtalk.data.model.Story
 import com.daniyal.flashtalk.data.model.User
@@ -16,6 +17,7 @@ class HomeViewModel : ViewModel() {
 
     val loggedUser: StateFlow<User?>
         get() = firebaseRepository.loggedUser
+
 
     val stories: StateFlow<List<Story>>
         get() = firebaseRepository.stories
@@ -34,10 +36,15 @@ class HomeViewModel : ViewModel() {
         firebaseRepository.getCurrentUser()
 
         viewModelScope.launch {
+            firebaseRepository.getContacts()
+        }
+
+        viewModelScope.launch {
             firebaseRepository.getChats()
         }
         viewModelScope.launch {
             firebaseRepository.getStories()
         }
+
     }
 }

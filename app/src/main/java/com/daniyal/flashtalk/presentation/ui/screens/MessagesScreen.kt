@@ -1,5 +1,6 @@
 package com.daniyal.flashtalk.presentation.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -16,17 +17,24 @@ import com.daniyal.flashtalk.presentation.ui.components.messages.HeaderMessages
 import com.daniyal.flashtalk.presentation.viewmodels.MessageViewModel
 
 @Composable
-fun MessagesScreen(viewModel: MessageViewModel, onBackClick: ()-> Unit) {
+fun MessagesScreen(viewModel: MessageViewModel, userId: String, onBackClick: () -> Unit) {
+
 
     val messages = viewModel.messages.collectAsState()
     val messageLoading = viewModel.messageLoading.collectAsState()
+    val contacts = viewModel.contacts.collectAsState()
+    val chatContact = contacts.value.find { it.id == userId }
+    Log.d("DDDD->", userId)
+    Log.d("DDDD->", contacts.value.toString())
 
     Surface(modifier = Modifier.fillMaxSize(1F)) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-//            HeaderMessages(singleUser, onBackClick)
+            if (chatContact != null) {
+                HeaderMessages(chatContact, onBackClick)
+            }
             BodyMessages(
                 messages.value,
                 messageLoading.value,

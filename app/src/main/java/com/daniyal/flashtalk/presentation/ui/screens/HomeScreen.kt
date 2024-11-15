@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -40,7 +41,7 @@ import com.daniyal.flashtalk.presentation.viewmodels.HomeViewModel
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    onPressChatItem: (id: Int) -> Unit,
+    onPressChatItem: (id: String) -> Unit,
     onPressUserImage: () -> Unit,
     onPressSearchIcon: () -> Unit
 ) {
@@ -49,6 +50,7 @@ fun HomeScreen(
     val chats = viewModel.chats.collectAsState()
     val storyLoading = viewModel.storyLoading.collectAsState()
     val chatLoading = viewModel.chatLoading.collectAsState()
+
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.tertiary) {
         Column(modifier = Modifier.fillMaxSize()) {

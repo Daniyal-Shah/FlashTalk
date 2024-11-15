@@ -1,5 +1,7 @@
 package com.daniyal.flashtalk.data.model
 
 data class Channel(
-    var id: String
+    val id: String = "",
+    val name: String,
+    val createdAt: Long = System.currentTimeMillis()
 )

@@ -16,9 +16,9 @@ class LogInViewModel : ViewModel() {
     val loading: StateFlow<Boolean>
         get() = firebaseRepository.loading
 
-    var email = mutableStateOf("daniyal.shah.cs@gmail.com")
+    var email = mutableStateOf("")
     var emailError = mutableStateOf<String?>(null)
-    var password = mutableStateOf("123456")
+    var password = mutableStateOf("")
     var passwordError = mutableStateOf<String?>(null)
 
 
@@ -52,8 +52,9 @@ class LogInViewModel : ViewModel() {
     }
 
     fun submitForm(onSuccess: () -> Unit) {
-        if (validateInputs()) {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            firebaseRepository.setLoading(true)
+            if (validateInputs()) {
                 firebaseRepository.login(
                     email = email.value,
                     password = password.value,
@@ -63,6 +64,7 @@ class LogInViewModel : ViewModel() {
                     },
                     onError = {})
             }
+            firebaseRepository.setLoading(false)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.daniyal.flashtalk.presentation.ui.components.chat
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,9 +32,20 @@ import com.daniyal.flashtalk.data.model.Chat
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 import com.daniyal.flashtalk.presentation.ui.components.common.DotType
+import com.daniyal.flashtalk.presentation.viewmodels.ChatItemViewModel
 
 @Composable
-fun ChatItem(chat: Chat, onPressItem: (id: Int) -> Unit, userStatus: DotType? = null) {
+fun ChatItem(
+    chat: Chat,
+    onPressItem: (id: String) -> Unit,
+    userStatus: DotType? = null,
+    viewModel: ChatItemViewModel
+) {
+    val contacts = viewModel.contacts.collectAsState()
+    val chatContact = contacts.value.find { it.id == chat.receiverId }
+
+    Log.d("DDDD", chat.toString())
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,12 +54,14 @@ fun ChatItem(chat: Chat, onPressItem: (id: Int) -> Unit, userStatus: DotType? = 
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        chat.sender.image?.let {
-//            CircularImage(
-//                dotType = userStatus,
-//                modifier = Modifier.size(70.dp),
-//                resourceId = it
-//            )
+        chatContact?.image.let {
+            if (it != null) {
+                CircularImage(
+                    dotType = userStatus,
+                    modifier = Modifier.size(70.dp),
+                    uri = it
+                )
+            }
         }
         Row(
             modifier = Modifier
@@ -61,17 +76,20 @@ fun ChatItem(chat: Chat, onPressItem: (id: Int) -> Unit, userStatus: DotType? = 
                     .fillMaxWidth(0.75F),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    chat.sender.fullName,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                if (chatContact != null) {
+                    Text(
+                        chatContact.fullName,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
                 Text(
                     chat.lastMsg.message,
                     fontFamily = CarosFontFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
-                    color = MaterialTheme.colorScheme.inversePrimary
+                    color = MaterialTheme.colorScheme.inversePrimary,
+                    maxLines = 2
                 )
             }
             Column(

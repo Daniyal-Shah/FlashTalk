@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class SignUpViewModel : ViewModel() {
     private val firebaseRepository: FirebaseRepository = FirebaseRepository()
 
-     val loading: StateFlow<Boolean>
+    val loading: StateFlow<Boolean>
         get() = firebaseRepository.loading
 
 
@@ -43,32 +43,39 @@ class SignUpViewModel : ViewModel() {
                 bioError.value = "Bio cannot be empty"
                 false
             }
+
             name.value.isEmpty() -> {
                 nameError.value = "Name cannot be empty"
                 false
             }
+
             email.value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.value)
                 .matches() -> {
                 emailError.value = "Invalid email address"
                 false
             }
+
             password.value.length < 6 -> {
                 passwordError.value = "Password must be at least 6 characters"
                 false
             }
+
             password.value != confirmPassword.value -> {
                 passwordError.value = "Passwords do not match"
                 confirmPasswordError.value = "Passwords do not match"
                 false
             }
+
             phoneNumber.value.isEmpty() -> {
                 phoneError.value = "Phone number cannot be empty"
                 false
             }
+
             bio.value.isEmpty() -> {
                 bioError.value = "Bio cannot be empty"
                 false
             }
+
             else -> {
                 true
             }
@@ -76,9 +83,10 @@ class SignUpViewModel : ViewModel() {
     }
 
     // Function to handle form submission
-    fun submitForm() {
-        if (validateInputs()) {
-            viewModelScope.launch {
+    fun submitForm(onSuccess: ()-> Unit) {
+        viewModelScope.launch {
+            firebaseRepository.setLoading(true)
+            if (validateInputs()) {
                 firebaseRepository.signup(name = name.value,
                     email = email.value,
                     password = password.value,
@@ -87,10 +95,13 @@ class SignUpViewModel : ViewModel() {
                     image = "https://picsum.photos/200",
                     onSuccess = {
                         clearValues()
+                        onSuccess()
                     },
                     onError = {})
             }
+            firebaseRepository.setLoading(false)
         }
+
     }
 
     private fun clearValues() {

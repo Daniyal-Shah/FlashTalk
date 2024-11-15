@@ -120,7 +120,9 @@ fun SignUpScreen(viewModel: SignUpViewModel, onPressAlreadyHaveAccount: () -> Un
                     CustomButtonType.ACTIVE,
                     "Create an account",
                     onClick = {
-                        viewModel.submitForm()
+                        viewModel.submitForm {
+
+                        }
                     }
                 )
                 Text(
