@@ -28,7 +28,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 
 
-
 enum class DotType(val value: String) {
     ACTIVE("ACTIVE"),
     INACTIVE("INACTIVE")
@@ -38,22 +37,33 @@ enum class DotType(val value: String) {
 @Composable
 fun CircularImage(
     modifier: Modifier,
-    uri: String,
+    uri: String? = null,
     userName: String? = null,
     userBio: String? = null,
     outerModifier: Modifier? = null,
-    dotType: DotType? = null
+    dotType: DotType? = null,
+    resourceId: Int? = null
 ) {
     Row(modifier = outerModifier ?: Modifier, verticalAlignment = Alignment.CenterVertically) {
         Box(
             contentAlignment = Alignment.BottomEnd
         ) {
-            Image(
-                painter = rememberAsyncImagePainter(uri),
-                contentDescription = "avatar",
-                contentScale = ContentScale.Crop,
-                modifier = modifier.clip(CircleShape)
-            )
+
+            if (resourceId != null)
+                Image(
+                    painter = painterResource(resourceId),
+                    contentDescription = "avatar",
+                    contentScale = ContentScale.Crop,
+                    modifier = modifier.clip(CircleShape)
+                )
+
+            if (uri != null)
+                Image(
+                    painter = rememberAsyncImagePainter(uri),
+                    contentDescription = "avatar",
+                    contentScale = ContentScale.Crop,
+                    modifier = modifier.clip(CircleShape)
+                )
             if (dotType != null) {
                 Row {
                     Box(

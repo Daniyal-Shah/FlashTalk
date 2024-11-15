@@ -34,17 +34,14 @@ class HomeViewModel : ViewModel() {
 
     init {
         firebaseRepository.getCurrentUser()
-
         viewModelScope.launch {
             firebaseRepository.getContacts()
         }
-
         viewModelScope.launch {
             firebaseRepository.getChats()
         }
         viewModelScope.launch {
             firebaseRepository.getStories()
         }
-
     }
 }

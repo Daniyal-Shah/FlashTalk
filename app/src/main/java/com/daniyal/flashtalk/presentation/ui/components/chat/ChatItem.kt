@@ -33,6 +33,7 @@ import com.daniyal.flashtalk.presentation.theme.CarosFontFamily
 import com.daniyal.flashtalk.presentation.ui.components.common.CircularImage
 import com.daniyal.flashtalk.presentation.ui.components.common.DotType
 import com.daniyal.flashtalk.presentation.viewmodels.ChatItemViewModel
+import com.daniyal.flashtalk.R
 
 @Composable
 fun ChatItem(
@@ -61,7 +62,11 @@ fun ChatItem(
                     modifier = Modifier.size(70.dp),
                     uri = it
                 )
-            }
+            } else CircularImage(
+                dotType = userStatus,
+                modifier = Modifier.size(70.dp),
+                resourceId = R.drawable.user
+            )
         }
         Row(
             modifier = Modifier
